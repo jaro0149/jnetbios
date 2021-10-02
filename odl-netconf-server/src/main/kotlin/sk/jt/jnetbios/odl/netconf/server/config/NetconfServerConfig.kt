@@ -5,6 +5,7 @@ import javax.validation.constraints.Min
 import javax.validation.constraints.NotBlank
 import javax.validation.constraints.Positive
 import org.springframework.boot.context.properties.ConfigurationProperties
+import org.springframework.validation.annotation.Validated
 
 /**
  * Configuration related to NETCONF server.
@@ -17,13 +18,13 @@ import org.springframework.boot.context.properties.ConfigurationProperties
  * @property connectionTimeout the maximum time before NETCONF session must be established (milliseconds)
  * @property maxNioThreads the maximum number of NIO threads used for processing of incoming and outgoing requests
  */
-// todo: @ConstructorBinding doesn't work and also validation doesn't work
+@Validated
 @ConfigurationProperties(prefix = "netconf-server")
-internal data class NetconfServerConfig(
-    @NotBlank var host: String = "127.0.0.1",
-    @Min(0) @Max(65535) var port: Int = 2022,
-    @NotBlank var username: String = "netbios",
-    @NotBlank var password: String = "netbios",
-    @Positive var connectionTimeout: Long = 5000,
-    @Positive var maxNioThreads: Int = 10
+internal data class NetconfServerConfig constructor(
+    @field:NotBlank var host: String = "127.0.0.1",
+    @field:Min(0) @field:Max(65535) var port: Int = 2022,
+    @field:NotBlank var username: String = "netbios",
+    @field:NotBlank var password: String = "netbios",
+    @field:Positive var connectionTimeout: Long = 5000,
+    @field:Positive var maxNioThreads: Int = 10
 )
